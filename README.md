@@ -42,7 +42,7 @@ bash status.sh
 - **Breaker IED v1 (Vulnerable)**: http://localhost:9001
 - **Breaker IED v2 (Secure)**: http://localhost:9002
 - **OpenPLC Runtime**: http://localhost:8081
-- **ScadaBR SCADA**: http://localhost:8080
+- **ScadaBR SCADA**: http://localhost:8080/ScadaBR
 
 ### Kali Workstation
 ```bash

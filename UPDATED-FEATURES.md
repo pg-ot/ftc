@@ -6,13 +6,11 @@
 - Pre-configured OpenPLC container with reactor control program
 - Modbus TCP server on port 502
 - Web interface on port 8081
-- Credentials: openplc/openplc
 
 ### 2. ScadaBR SCADA System
 - Pre-configured ScadaBR HMI system
 - Connected to OpenPLC via Modbus
 - Web interface on port 8080
-- Credentials: admin/admin
 
 ### 3. Dual Network Architecture
 - **Mahashakti Network** (192.168.100.0/24): IEDs and GOOSE traffic
