@@ -183,18 +183,24 @@ init_submodules() {
     fi
     
     echo "Checking submodules..."
-    git submodule status
+    SUBMODULE_STATUS=$(git submodule status 2>/dev/null)
     
-    echo ""
-    echo "Initializing submodules..."
-    git submodule update --init --recursive
-    
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✓ Submodules initialized${NC}"
+    if echo "$SUBMODULE_STATUS" | grep -q "^-"; then
+        echo "Submodules not initialized, initializing now..."
+        git submodule update --init --recursive
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✓ Submodules initialized${NC}"
+        else
+            echo -e "${RED}✗ Submodule initialization failed${NC}"
+        fi
     else
-        echo -e "${RED}✗ Submodule initialization failed${NC}"
+        echo -e "${GREEN}✓ Submodules already initialized${NC}"
+        echo "Updating to latest..."
+        git submodule update --recursive
     fi
     
+    echo ""
     read -p "Press Enter to continue..."
 }
 
