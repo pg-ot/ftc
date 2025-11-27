@@ -51,7 +51,7 @@ EOF
 
 for i in $(seq 1 $TEAM_COUNT); do
     TEAM_ID="team${i}"
-    SSH_PORT=$((2200 + i))  # Maps to container port 22
+    SSH_PORT=$((20000 + i))  # Maps to container port 22
     
     # Check if Kali container exists
     if ! docker ps --format "{{.Names}}" | grep -q "^${TEAM_ID}-kali$"; then
