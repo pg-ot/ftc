@@ -51,7 +51,7 @@ for i in $(seq 1 $NUM_TEAMS); do
     OPENPLC_WEB_PORT=$((BASE_OPENPLC_WEB_PORT + (i - 1) * 10))
     SCADABR_PORT=$((BASE_SCADABR_PORT + (i - 1) * 10))
     MODBUS_PORT=$((BASE_MODBUS_PORT + (i - 1) * 10))
-    SSH_PORT=$((BASE_SSH_PORT + (i - 1)))
+    SSH_PORT=$((BASE_SSH_PORT + i))
     
     # Calculate subnets
     MAHASHAKTI_SUBNET=$((BASE_MAHASHAKTI_SUBNET + i))
