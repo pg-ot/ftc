@@ -104,6 +104,7 @@ fresh_install() {
         echo -e "${YELLOW}Directory $INSTALL_DIR already exists!${NC}"
         read -p "Remove and reinstall? (y/n): " confirm
         if [[ $confirm =~ ^[Yy]$ ]]; then
+            cd ~
             rm -rf "$INSTALL_DIR"
         else
             echo "Cancelled"
