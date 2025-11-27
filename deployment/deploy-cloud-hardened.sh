@@ -11,6 +11,23 @@ echo "=========================================="
 echo "Multi-Team CTF Deployment"
 echo "Deploying $NUM_TEAMS team(s)"
 echo "=========================================="
+echo ""
+echo "Cleaning up existing containers..."
+
+# Stop and remove conflicting containers
+docker stop $(docker ps -a --filter "name=substation" -q) 2>/dev/null || true
+docker rm $(docker ps -a --filter "name=substation" -q) 2>/dev/null || true
+docker stop $(docker ps -a --filter "name=team" -q) 2>/dev/null || true
+docker rm $(docker ps -a --filter "name=team" -q) 2>/dev/null || true
+docker stop openplc scadabr kali-workstation 2>/dev/null || true
+docker rm openplc scadabr kali-workstation 2>/dev/null || true
+
+# Remove conflicting networks
+docker network rm deployment_mahashakti deployment_aushadi_raksha 2>/dev/null || true
+docker network rm $(docker network ls --filter "name=team" -q) 2>/dev/null || true
+
+echo "✓ Cleanup complete"
+echo ""
 
 # Base ports
 BASE_BREAKER_V1_PORT=9001
