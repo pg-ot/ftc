@@ -12,8 +12,8 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/pg-ot/indra.git"
-INSTALL_DIR="$HOME/indra"
+REPO_URL="https://github.com/pg-ot/tmp.git"
+INSTALL_DIR="$HOME/indra-ctf"
 COMPOSE_FILE="deployment/docker-compose-ctf-final.yml"
 
 # Function to display header
@@ -119,8 +119,8 @@ fresh_install() {
         echo -e "${GREEN}✓ Repository cloned successfully${NC}"
         echo ""
         echo "Next steps:"
-        echo "  cd $INSTALL_DIR"
-        echo "  ./event-management/ctf-admin.sh"
+        echo "  cd $INSTALL_DIR/event-management"
+        echo "  ./ctf-admin.sh"
     else
         echo -e "${RED}✗ Clone failed${NC}"
     fi
