@@ -124,7 +124,20 @@ for i in $(seq 1 $NUM_TEAMS); do
         --cap-add=NET_ADMIN \
         --cap-add=NET_RAW \
         --restart unless-stopped \
-        pavi0204/kali-ctf:golden
+        pavi0204/kali-ctf:golden \
+        tail -f /dev/null
+    
+    # Setup SSH and user in Kali container
+    docker exec team${i}-kali bash -c "
+        apt-get update -qq && apt-get install -y -qq openssh-server sudo > /dev/null 2>&1
+        useradd -m -s /bin/bash ctfuser
+        echo 'ctfuser:IEC61850_CTF_2024' | chpasswd
+        usermod -aG sudo ctfuser
+        mkdir -p /run/sshd
+        sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
+        sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+        /usr/sbin/sshd
+    " 2>/dev/null || echo "Warning: SSH setup failed for team${i}"
     
     # Connect Kali to second network
     docker network connect --ip 192.168.${AUSHADI_SUBNET}.2 team${i}_aushadi_raksha team${i}-kali
