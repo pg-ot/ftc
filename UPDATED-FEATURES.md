@@ -40,7 +40,7 @@ All event management scripts have been updated:
 ## File Structure
 
 ```
-indra-ctf/
+ftc/
 ├── src/                          # IED source code
 ├── docker/                       # Dockerfiles
 ├── deployment/

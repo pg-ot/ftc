@@ -20,8 +20,8 @@ Exploit vulnerabilities in the IEC 61850 GOOSE protocol to disable weapons manuf
 
 ```bash
 # Clone with submodules
-git clone --recurse-submodules https://github.com/your-username/indra-ctf.git
-cd indra-ctf
+git clone --recurse-submodules https://github.com/pg-ot/ftc.git
+cd ftc
 
 # Pull required images
 docker pull kalilinux/kali-rolling:latest
@@ -117,7 +117,7 @@ SCADA/Modbus Network
 ## Project Structure
 
 ```
-indra-ctf/
+ftc/
 ├── src/
 │   ├── libiec61850/          # IEC 61850 protocol library (submodule)
 │   ├── breaker_ied_v1.c      # Vulnerable breaker implementation

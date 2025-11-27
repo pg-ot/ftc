@@ -12,8 +12,8 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/pg-ot/tmp.git"
-INSTALL_DIR="$HOME/indra-ctf"
+REPO_URL="https://github.com/pg-ot/ftc.git"
+INSTALL_DIR="$HOME/ftc"
 COMPOSE_FILE="deployment/docker-compose-ctf-final.yml"
 
 # Function to display header
@@ -40,7 +40,7 @@ check_repo() {
     fi
     
     echo -e "${RED}❌ Not in a Git repository!${NC}"
-    echo -e "${YELLOW}Please run this from the indra directory or use Installation menu${NC}"
+    echo -e "${YELLOW}Please run this from the ftc directory or use Installation menu${NC}"
     return 1
 }
 
