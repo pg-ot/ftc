@@ -62,11 +62,21 @@ for i in $(seq 1 $TEAM_COUNT); do
     # Generate password
     PASSWORD=$(openssl rand -base64 12 | tr -d '/+=' | head -c 8)
     
+    echo "  Generating password for ${TEAM_ID}: ${PASSWORD}"
+    
     # Change password in container
     docker exec ${TEAM_ID}-kali bash -c "echo 'ctfuser:${PASSWORD}' | chpasswd" 2>/dev/null
     
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✓ ${TEAM_ID}: Password changed${NC}"
+        echo -e "${GREEN}✓ ${TEAM_ID}: Password changed to ${PASSWORD}${NC}"
+        
+        # Verify password was set
+        VERIFY=$(docker exec ${TEAM_ID}-kali bash -c "echo '${PASSWORD}' | su - ctfuser -c 'echo OK'" 2>/dev/null)
+        if [ "$VERIFY" = "OK" ]; then
+            echo "  Verification: Password correctly set"
+        else
+            echo -e "  ${YELLOW}Warning: Could not verify password${NC}"
+        fi
         
         # Write to file
         cat >> "$OUTPUT_FILE" << EOF
