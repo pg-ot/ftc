@@ -377,19 +377,32 @@ deploy_teams() {
     echo ""
     echo "Deploying $num_teams teams..."
     
-    cd deployment 2>/dev/null || {
+    # Find deployment directory
+    DEPLOY_DIR=""
+    if [ -d "deployment" ]; then
+        DEPLOY_DIR="deployment"
+    elif [ -d "../deployment" ]; then
+        DEPLOY_DIR="../deployment"
+    else
         echo -e "${RED}✗ deployment directory not found${NC}"
         read -p "Press Enter to continue..."
         return
-    }
-    
-    if [ -f "deploy-cloud-hardened.sh" ]; then
-        sudo bash deploy-cloud-hardened.sh $num_teams
-    else
-        echo -e "${RED}✗ deploy-cloud-hardened.sh not found${NC}"
     fi
     
-    cd ..
+    SCRIPT_PATH="$DEPLOY_DIR/deploy-cloud-hardened.sh"
+    
+    if [ -f "$SCRIPT_PATH" ]; then
+        bash "$SCRIPT_PATH" $num_teams
+        if [ $? -eq 0 ]; then
+            echo ""
+            echo -e "${GREEN}✓ $num_teams team(s) deployed successfully${NC}"
+        else
+            echo -e "${RED}✗ Deployment failed${NC}"
+        fi
+    else
+        echo -e "${RED}✗ deploy-cloud-hardened.sh not found at $SCRIPT_PATH${NC}"
+    fi
+    
     read -p "Press Enter to continue..."
 }
 
