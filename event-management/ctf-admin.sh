@@ -879,8 +879,8 @@ team_access() {
         echo -e "  ${CYAN}3. Access Web Interfaces (after port forward):${NC}"
         echo "     Breaker v1:  http://localhost:9001"
         echo "     Breaker v2:  http://localhost:9002"
-        echo "     OpenPLC:     http://localhost:8081 (openplc/openplc)"
-        echo "     ScadaBR:     http://localhost:8080/ScadaBR (admin/admin)"
+        echo "     OpenPLC:     http://localhost:8081"
+        echo "     ScadaBR:     http://localhost:8080/ScadaBR"
         echo ""
     done
     
