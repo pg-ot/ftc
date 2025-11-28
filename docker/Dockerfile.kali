@@ -1,8 +1,5 @@
 FROM kalilinux/kali-rolling
 
-ARG KALI_USER=kali
-ARG KALI_PASSWORD=changeme
-
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         openssh-server sudo python3-pip tcpdump tshark scapy iproute2 net-tools \
@@ -11,13 +8,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/run/sshd
 
-# Create a non-root user for participants
-RUN useradd -m -s /bin/bash ${KALI_USER} \
-    && echo "${KALI_USER}:${KALI_PASSWORD}" | chpasswd \
-    && usermod -aG sudo ${KALI_USER}
+# Create ctfuser with proper credentials
+RUN useradd -m -s /bin/bash ctfuser \
+    && echo 'ctfuser:IEC61850_CTF_2024' | chpasswd \
+    && usermod -aG sudo ctfuser
 
-# Enable password auth (override to "no" if you only use SSH keys)
+# Configure SSH
 RUN sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config \
     && sed -i 's@session\s\+required\s\+pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
 
 EXPOSE 22
