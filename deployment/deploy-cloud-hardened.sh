@@ -126,6 +126,9 @@ for i in $(seq 1 $NUM_TEAMS); do
         --restart unless-stopped \
         pavi0204/kali-ctf:sshd
     
+    # Ensure ctfuser exists with default password
+    docker exec team${i}-kali bash -c "useradd -m -s /bin/bash ctfuser 2>/dev/null || true; echo 'ctfuser:IEC61850_CTF_2024' | chpasswd; usermod -aG sudo ctfuser; /usr/sbin/sshd 2>/dev/null || true" || true
+    
     # Connect Kali to second network
     docker network connect --ip 192.168.${AUSHADI_SUBNET}.2 team${i}_aushadi_raksha team${i}-kali
     
