@@ -65,7 +65,7 @@ echo "5. Ping ScadaBR:"
 docker exec $KALI ping -c 2 ${TEAM_ID}-scadabr 2>/dev/null && echo "   ✓ ${TEAM_ID}-scadabr reachable" || echo "   ✗ ${TEAM_ID}-scadabr unreachable"
 
 echo ""
-echo "6. GOOSE publish (tcpdump on Kali):
+echo "6. GOOSE publish (tcpdump on Kali):"
 GOOSE_COUNT=$(docker exec $KALI timeout 5 tcpdump -i eth0 -c 5 ether proto 0x88b8 2>/dev/null | wc -l)
 if [ $GOOSE_COUNT -gt 0 ]; then
     echo "   ✓ GOOSE packets detected ($GOOSE_COUNT packets)"
