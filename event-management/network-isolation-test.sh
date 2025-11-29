@@ -1,4 +1,7 @@
 #!/bin/bash
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 # Test network isolation between teams
 
 if [ -z "$1" ]; then

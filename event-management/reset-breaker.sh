@@ -1,4 +1,7 @@
 #!/bin/bash
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 # Reset specific breaker container
 
 if [ -z "$1" ] || [ -z "$2" ]; then

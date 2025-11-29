@@ -1,4 +1,7 @@
 #!/bin/bash
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 # Backup current container state
 
 BACKUP_DIR="/home/svresidency_kovai/ctf-backups"

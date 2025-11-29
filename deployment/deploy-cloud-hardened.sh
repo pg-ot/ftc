@@ -100,6 +100,7 @@ for i in $(seq 1 $NUM_TEAMS); do
     docker run -d \
         --name team${i}-openplc \
         --network team${i}_aushadi_raksha \
+        --network-alias openplc \
         --ip 192.168.${AUSHADI_SUBNET}.3 \
         -p ${OPENPLC_WEB_PORT}:8080 \
         -p ${MODBUS_PORT}:502 \

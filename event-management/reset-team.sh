@@ -1,4 +1,7 @@
 #!/bin/bash
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 # Full reset of team environment (stop, remove, recreate)
 
 if [ -z "$1" ]; then

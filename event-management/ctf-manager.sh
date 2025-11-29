@@ -1,6 +1,10 @@
 #!/bin/bash
 # Interactive CTF Management Tool
 
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -89,9 +93,9 @@ show_status() {
     if select_team; then
         echo ""
         if [ "$TEAM" = "ALL" ]; then
-            ./status.sh
+            "$SCRIPT_DIR/status.sh"
         else
-            ./status.sh team$(printf "%03d" $TEAM)
+            "$SCRIPT_DIR/status.sh" team$(printf "%03d" $TEAM)
         fi
         echo ""
         read -p "Press Enter to continue..."
@@ -106,7 +110,7 @@ restart_containers() {
         echo ""
         if [ "$TEAM" = "ALL" ]; then
             echo -e "${YELLOW}Restarting ALL teams...${NC}"
-            ./restart-all.sh
+            "$SCRIPT_DIR/restart-all.sh"
         else
             if select_component; then
                 echo ""
@@ -114,7 +118,7 @@ restart_containers() {
                 
                 if [ "$COMPONENT" = "ALL" ]; then
                     echo -e "${YELLOW}Restarting all containers for Team $TEAM...${NC}"
-                    ./restart-team.sh $TEAM
+                    "$SCRIPT_DIR/restart-team.sh" $TEAM
                 else
                     echo -e "${YELLOW}Restarting ${TEAM_ID}-${COMPONENT}...${NC}"
                     docker restart ${TEAM_ID}-${COMPONENT}
@@ -157,7 +161,7 @@ view_logs() {
         if select_component; then
             echo ""
             if [ "$COMPONENT" = "ALL" ]; then
-                ./logs.sh $TEAM_ID
+                "$SCRIPT_DIR/logs.sh" $TEAM_ID
             else
                 echo -e "${YELLOW}Viewing logs for ${TEAM_ID}-${COMPONENT}${NC}"
                 echo -e "${CYAN}Press Ctrl+C to exit${NC}"
@@ -177,7 +181,7 @@ check_network() {
     
     if select_team; then
         echo ""
-        ./network-check.sh $TEAM
+        "$SCRIPT_DIR/network-check.sh" $TEAM
         echo ""
         read -p "Press Enter to continue..."
     fi
@@ -193,7 +197,7 @@ reset_team() {
         read -p "Are you sure? (y/n): " confirm
         
         if [[ $confirm =~ ^[Yy]$ ]]; then
-            ./reset-team.sh $TEAM
+            "$SCRIPT_DIR/reset-team.sh" $TEAM
         else
             echo "Cancelled"
         fi
@@ -209,9 +213,9 @@ check_flags() {
     if select_team; then
         echo ""
         if [ "$TEAM" = "ALL" ]; then
-            ./check-flags.sh
+            "$SCRIPT_DIR/check-flags.sh"
         else
-            ./check-flags.sh $TEAM
+            "$SCRIPT_DIR/check-flags.sh" $TEAM
         fi
         echo ""
         read -p "Press Enter to continue..."
@@ -233,7 +237,7 @@ test_isolation() {
     case $test_choice in
         1)
             echo ""
-            ./test-all-networks.sh
+            "$SCRIPT_DIR/test-all-networks.sh"
             echo ""
             read -p "Press Enter to continue..."
             ;;
@@ -249,7 +253,7 @@ test_isolation() {
             fi
             
             echo ""
-            ./network-isolation-test.sh $source $target
+            "$SCRIPT_DIR/network-isolation-test.sh" $source $target
             echo ""
             read -p "Press Enter to continue..."
             ;;
@@ -337,19 +341,19 @@ main_menu() {
                 clear
                 echo -e "${CYAN}Starting live monitor... Press Ctrl+C to return${NC}"
                 sleep 2
-                ./monitor.sh
+                "$SCRIPT_DIR/monitor.sh"
                 ;;
             a|A)
                 show_header
                 echo -e "${YELLOW}Creating backup...${NC}"
-                ./backup.sh
+                "$SCRIPT_DIR/backup.sh"
                 echo ""
                 read -p "Press Enter to continue..."
                 ;;
             0)
                 show_header
                 echo -e "${RED}⚠️  EMERGENCY STOP${NC}"
-                ./emergency-stop.sh
+                "$SCRIPT_DIR/emergency-stop.sh"
                 echo "
 "
                 read -p "Press Enter to continue..."
