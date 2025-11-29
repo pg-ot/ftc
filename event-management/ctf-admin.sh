@@ -726,17 +726,7 @@ git_log() {
 
 management_menu() {
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    if [ -f "$SCRIPT_DIR/ctf-manager.sh" ]; then
-        bash "$SCRIPT_DIR/ctf-manager.sh"
-    else
-        show_header
-        echo -e "${RED}ctf-manager.sh not found at $SCRIPT_DIR${NC}"
-        echo ""
-        echo "Expected location: $SCRIPT_DIR/ctf-manager.sh"
-        echo "Current directory: $(pwd)"
-        echo ""
-        read -p "Press Enter to continue..."
-    fi
+    bash "$SCRIPT_DIR/ctf-manager.sh"
 }
 
 # ============================================================================

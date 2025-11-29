@@ -5,7 +5,7 @@ cd "$SCRIPT_DIR"
 # Verify network connectivity between containers
 
 if [ -z "$1" ]; then
-    TEAM="001"
+    TEAM="1"
 else
     TEAM=$1
 fi
@@ -16,8 +16,10 @@ if [ "$TEAM" = "ALL" ]; then
     echo "Time: $(date)"
     echo ""
     
-    for i in {1..5}; do
-        TEAM_NUM=$(printf "%03d" $i)
+    # Get deployed teams dynamically
+    DEPLOYED_TEAMS=($(docker ps --filter "name=team" --format "{{.Names}}" | grep -o "team[0-9]\+" | sort -u | sed 's/team//'))
+    
+    for TEAM_NUM in "${DEPLOYED_TEAMS[@]}"; do
         echo "Checking Team $TEAM_NUM..."
         $0 $TEAM_NUM | grep -E "(✓|✗)"
         echo ""
@@ -27,7 +29,7 @@ if [ "$TEAM" = "ALL" ]; then
     exit 0
 fi
 
-TEAM_ID=$(printf "team%03d" $TEAM)
+TEAM_ID="team${TEAM}"
 
 echo "=== Network Connectivity Check: Team $TEAM ==="
 echo "Time: $(date)"
@@ -37,7 +39,7 @@ echo ""
 KALI="${TEAM_ID}-kali"
 BREAKER_V1="${TEAM_ID}-breaker-v1"
 BREAKER_V2="${TEAM_ID}-breaker-v2"
-CONTROL="${TEAM_ID}-control"
+CONTROL="${TEAM_ID}-control-ied"
 
 echo "Testing from Kali workstation..."
 echo ""
