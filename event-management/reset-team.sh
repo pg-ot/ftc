@@ -34,13 +34,16 @@ docker rm $(docker ps -a --filter "name=$TEAM_ID" -q) 2>/dev/null
 echo ""
 echo "Recreating team $1 containers..."
 
-# Recreate containers (adjust based on your deployment script)
-cd /home/svresidency_kovai/deployment 2>/dev/null || cd ~/deployment 2>/dev/null || {
-    echo "❌ Error: deployment directory not found"
+# Find deployment directory relative to script location
+DEPLOY_DIR="$SCRIPT_DIR/../deployment"
+
+if [ ! -d "$DEPLOY_DIR" ]; then
+    echo "❌ Error: deployment directory not found at $DEPLOY_DIR"
     exit 1
-}
+fi
 
 # Run deployment for single team
+cd "$DEPLOY_DIR"
 sudo bash deploy-cloud-hardened.sh 1 $1
 
 echo ""
